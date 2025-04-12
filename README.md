@@ -1,0 +1,1 @@
+Repository for Qt6 proyects.
