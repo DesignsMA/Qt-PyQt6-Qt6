@@ -1,1 +1,1 @@
-Repository for Qt6 proyects.
+Repository for Qt6 projects.

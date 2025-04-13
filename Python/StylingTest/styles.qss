@@ -1,0 +1,9 @@
+!!! This is an example
+
+QLabel { # Defines the specified style for all QLabel instances
+  background-color: red;
+}
+
+QLabel#titleLabel { # apply style to txtClass only with name titleLabel
+  font-size:20px;
+}
