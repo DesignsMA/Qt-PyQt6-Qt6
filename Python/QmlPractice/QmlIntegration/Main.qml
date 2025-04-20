@@ -7,8 +7,8 @@ import QtQuick.Layouts 1.11
 import QtQuick.Controls 2.1
 import QtQuick.Window 2.1
 import QtQuick.Controls.Material 2.1
-
-import io.qt.textproperties 1.0
+// importing bridge class for use in qml (was exposed with @QmlElement decorator)
+import io.qt.textproperties 1.0 
 
 ApplicationWindow {
     id: page
@@ -17,8 +17,9 @@ ApplicationWindow {
     visible: true
     Material.theme: Material.Dark
     Material.accent: Material.Red
-
-    Bridge {
+    // instance of bridge object that contains all slots (logic) to be used
+    // Since this is qml it's only a declaration of a component to be instanciated
+    Bridge { 
         id: bridge
     }
 
@@ -46,8 +47,10 @@ ApplicationWindow {
                 id: italic
                 Layout.alignment: Qt.AlignLeft
                 text: "Italic"
+                // on toggled signal
                 onToggled: {
-                    leftlabel.font.italic = bridge.getItalic(italic.text)
+                    // sets leftlabel italic property to true if toggled
+                    leftlabel.font.italic = bridge.getItalic(italic.text) 
                     leftlabel.font.bold = bridge.getBold(italic.text)
                     leftlabel.font.underline = bridge.getUnderline(italic.text)
 
@@ -77,7 +80,8 @@ ApplicationWindow {
                 id: noneradio
                 Layout.alignment: Qt.AlignLeft
                 text: "None"
-                checked: true
+                //cheked by default
+                checked: true 
                 onToggled: {
                     leftlabel.font.italic = bridge.getItalic(noneradio.text)
                     leftlabel.font.bold = bridge.getBold(noneradio.text)
@@ -103,7 +107,9 @@ ApplicationWindow {
                     text: "Red"
                     highlighted: true
                     Material.accent: Material.Red
+                    // on clicked signal
                     onClicked: {
+                        // set leftlabel color to the hex value returned by the slot getColor in bridge
                         leftlabel.color = bridge.getColor(red.text)
                     }
                 }
@@ -135,6 +141,7 @@ ApplicationWindow {
                     }
                 }
             }
+            //second colum element
             RowLayout {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
@@ -146,11 +153,16 @@ ApplicationWindow {
                     Material.accent: Material.White
                 }
                 Slider {
+                    // 60% of the actual column width
                     width: rightcolumn.width*0.6
                     Layout.alignment: Qt.AlignRight
                     id: slider
                     value: 0.5
+                    // value of the slider, from 0 to 1
+                    // on value changed signal
                     onValueChanged: {
+                        // change leftlabel point size to the value returned by the getSize slot
+                        // get size returns a value with a maximum of 34, 
                         leftlabel.font.pointSize = bridge.getSize(value)
                     }
                 }
