@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import sys
-
 from PySide6.QtCore import QObject, Slot
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine, QmlElement

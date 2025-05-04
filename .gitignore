@@ -9,7 +9,7 @@
 *.so.*
 *.dll
 *.dylib
-
+Python/PyvisTest/scripts
 # Qt-es
 object_script.*.Release
 object_script.*.Debug

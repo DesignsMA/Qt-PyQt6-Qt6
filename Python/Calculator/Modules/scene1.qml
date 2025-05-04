@@ -1,38 +1,61 @@
 import QtQuick 
-import QtQuick.Layouts
 import QtQuick.Controls 
-import QtQuick.Window 
-import QtQuick.Controls.Material 
-// importing bridge class for use in qml (was exposed with @QmlElement decorator)
+// For PySide6 (Qt 6.x)
+import Qt5Compat.GraphicalEffects
 
 ApplicationWindow {
-    id: root
+    id: window
+    width: 400
+    height: 300
     visible: true
-    // combine flags, this component behaves as a window, we apply or operator to flags to combine with frameless
-    visibility: Window.Maximized
+    color: "#161616" // Fondo oscuro
 
-    RowLayout {
-        id: containerV
-        Layout.fillHeight: true
-        Layout.fillWidth: true
-
-        Rectangle {
-            id: screen
+    // Botón personalizado
+    Button {
+        id: customButton
+        anchors.centerIn: parent
+        width: 150
+        height: 50
+        text: "Hazme hover"
+        
+        // Eliminar el estilo por defecto
+        background: Rectangle {
+            id: btnBackground
+            color: "transparent"
+            radius: 8 // Bordes redondeados
+            border.color: "#ff0000" // Borde rojo
+            border.width: 3 // Grosor del borde
             
-            Layout.fillWidth: true
-            implicitHeight: RowLayout.implicitHeight
-            implicitWidth: RowLayout.implicitWidth
-            height:80
-            color:color()
-            radius: 20.0
-
-            Label{
-                id: screenTxt
-                text: "..."
-
+            // Sombra/glow que solo se muestra en hover
+            layer.enabled: customButton.hovered
+            layer.effect: Glow {
+                samples: 15 // Calidad del efecto glow
+                color: "#ff3333" // Color rojo más claro
+                spread: 0.4 // Intensidad del glow
             }
         }
 
+        // Estilo del texto
+        contentItem: Text {
+            text: customButton.text
+            font.pixelSize: 16
+            color: "white"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
 
+        // Efecto de escala al hacer hover
+        Behavior on scale {
+            NumberAnimation { duration: 100 }
+        }
+
+        // Animación al pasar el mouse
+        onHoveredChanged: {
+            if (hovered) {
+                scale = 1.05
+            } else {
+                scale = 1.0
+            }
+        }
     }
 }
